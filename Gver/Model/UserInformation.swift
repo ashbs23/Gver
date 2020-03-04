@@ -15,6 +15,8 @@ struct UserInformation: Codable {
     let lastName: String?
     let email: String
     let address: String?
+    let latitude: Double?
+    let longitude: Double?
     let phone: String?
     let profileImageURL: String?
     
@@ -24,6 +26,8 @@ struct UserInformation: Codable {
                 K.FStoreFields.UserInformationFields.lastNameField: lastName ?? "",
                 K.FStoreFields.UserInformationFields.emailField: email,
                 K.FStoreFields.UserInformationFields.addressField: address ?? "",
+                K.FStoreFields.UserInformationFields.latitudeField: latitude ?? 0.0,
+                K.FStoreFields.UserInformationFields.longitudeField: longitude ?? 0.0,
                 K.FStoreFields.UserInformationFields.phoneField: phone ?? "",
                 K.FStoreFields.UserInformationFields.profileImageURL: profileImageURL ?? "",
                 K.FStoreFields.UserInformationFields.lastUpdatedField: FieldValue.serverTimestamp(),

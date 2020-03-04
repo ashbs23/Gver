@@ -8,6 +8,7 @@
 
 import Foundation
 import Firebase
+import FirebaseStorage
 
 struct K {
     static let settingsTableStrings = [
@@ -20,6 +21,7 @@ struct K {
     ]
     
     static let db = Firestore.firestore()
+    static let storage = Storage.storage()
     
     struct SegueNames {
         static let goToSignUp = "goToSignUp"
@@ -28,6 +30,8 @@ struct K {
         static let signUpToHome = "signUpToHome"
         static let settingsToEditProfile = "SettingsToEditProfile"
         static let editProfileToMap = "EditProfileToMap"
+        static let createPostToMap = "CreatePostToMap"
+        static let homeToPost = "homeToPost"
     }
     
     struct StoryboardID {
@@ -41,6 +45,8 @@ struct K {
     
     struct ReusableTableCells {
         static let settingsTableCell = "settingsTableCell"
+        static let postTableViewCell = "postTableViewCell"
+        static let postTableViewCellNibName = "PostTableViewCell"
     }
     
     struct FStoreFields {
@@ -54,15 +60,33 @@ struct K {
             static let phoneField: String = "phone"
             static let lastUpdatedField: String = "lastUpdated"
             static let profileImageURL: String = "profileImageURL"
+            static let latitudeField: String = "latitude"
+            static let longitudeField: String = "longitude"
+        }
+        
+        struct PostInformationFields {
+            static let postInformationCollectionName = "postInformation"
+            static let userIdField = "userId"
+            static let profileImageURLStringField = "profileImageURLString"
+            static let postIdField = "postId"
+            static let postTitleField = "postTitle"
+            static let postDetailsField = "postDetails"
+            static let postAddressField = "postAddress"
+            static let latitudeField = "latitude"
+            static let longitudeField = "longitude"
+            static let postImagesField = "postImages"
+            static let postTimeField = "postTime"
+            static let statusFinishedField = "statusFinished"
         }
     }
     
     struct UserImageDirs {
-        static var userProfileImage = "Profile\(Auth.auth().currentUser!.uid).png"
+        static var userProfileImage = "Profile.png"
     }
     
     struct ViewTitle {
         static let editProfile = "Edit Profile"
+        static let createPost = "Create Post"
     }
     
     struct TextFieldErrorStrings {
@@ -70,6 +94,10 @@ struct K {
         static let addressErrorString = "Please enter your address"
         static let phoneErrorString = "Please enter your phone number"
         static let phoneValidityErrorString = "Please enter a valid phone number"
+    }
+    
+    struct TextViewPlaceholderStrings {
+        static let createPostDescriptionPlaceholder = "Write details of the things you are giving away. Remember to add some photos"
     }
     
     struct AlertStrings {

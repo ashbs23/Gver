@@ -12,8 +12,8 @@ import UIKit
 extension TextFieldValidators {
     
     func showTextFieldInputIsValid(for textField: UITextField) {
-        textField.layer.borderColor = UIColor.white.cgColor
-        textField.layer.borderWidth = 0.0
+        textField.layer.borderColor = UIColor.init(named: "AppFocusedTextColor")?.cgColor
+        textField.layer.borderWidth = 1.0
     }
     
     func showTextFieldInputNotValidError(for textField: UITextField,string errorString: String) {

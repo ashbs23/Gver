@@ -30,11 +30,13 @@ extension EditProfileViewController {
         phoneTextField.text = ProfileManagementFirestore.userInformation.phone
         self.imagePicker = ImagePicker(presentationController: self, delegate: self,
                                        fileName: K.UserImageDirs.userProfileImage)
-        
-        if let img = imageFileManagement.getSavedImage(
-            named: K.UserImageDirs.userProfileImage) {
-              profileImageView.image = img
+        let locationInformation = locationManagement.getLocationInformation()
+        DispatchQueue.main.async {
+            self.addressTextField.text = locationInformation["address"] as? String
         }
+        
+        profileImageView.pin_updateWithProgress = true
+        profileImageView.pin_setImage(from: URL.init(string: ProfileManagementFirestore.userInformation.profileImageURL!), placeholderImage: UIImage(named: "Icon"))
     
     }
 }

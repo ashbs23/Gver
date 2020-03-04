@@ -29,6 +29,21 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         signUpButton.layer.cornerRadius = 20
         signUpButton.clipsToBounds = true
         
+        emailTextField.layer.borderColor = UIColor.init(named: "AppFocusedTextColor")?.cgColor
+        emailTextField.layer.borderWidth = 2.0
+        emailTextField.layer.cornerRadius = 10
+        emailTextField.clipsToBounds = true
+        
+        passwordTextField.layer.borderColor = UIColor.init(named: "AppFocusedTextColor")?.cgColor
+        passwordTextField.layer.borderWidth = 2.0
+        passwordTextField.layer.cornerRadius = 10
+        passwordTextField.clipsToBounds = true
+        
+        confirmPasswordTextField.layer.borderColor = UIColor.init(named: "AppFocusedTextColor")?.cgColor
+        confirmPasswordTextField.layer.borderWidth = 2.0
+        confirmPasswordTextField.layer.cornerRadius = 10
+        confirmPasswordTextField.clipsToBounds = true
+        
         signUpPageLogo.layer.cornerRadius = signUpPageLogo.frame.size.width / 2
         signUpPageLogo.clipsToBounds = true
     }

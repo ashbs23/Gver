@@ -18,13 +18,13 @@ class SignInViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         updateUI()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: animated)
+        
     }
     
     override func viewDidAppear(_ animated: Bool){
@@ -32,6 +32,7 @@ class SignInViewController: UIViewController {
         if Auth.auth().currentUser != nil {
             self.performSegue(withIdentifier: K.SegueNames.alreadySignedIn, sender: nil)
         }
+
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -63,6 +64,16 @@ class SignInViewController: UIViewController {
     func updateUI() {
         signInButton.layer.cornerRadius = 20
         signInButton.clipsToBounds = true
+        
+        emailTextField.layer.borderColor = UIColor.init(named: "AppFocusedTextColor")?.cgColor
+        emailTextField.layer.borderWidth = 2.0
+        emailTextField.layer.cornerRadius = 10
+        emailTextField.clipsToBounds = true
+        
+        passwordTextField.layer.borderColor = UIColor.init(named: "AppFocusedTextColor")?.cgColor
+        passwordTextField.layer.borderWidth = 2.0
+        passwordTextField.layer.cornerRadius = 10
+        passwordTextField.clipsToBounds = true
         
         signInPageLogo.layer.cornerRadius = signInPageLogo.frame.size.width / 2
         signInPageLogo.clipsToBounds = true

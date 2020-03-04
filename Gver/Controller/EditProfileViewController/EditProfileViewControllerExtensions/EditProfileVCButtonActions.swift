@@ -51,24 +51,37 @@ extension EditProfileViewController {
     }
     
     @IBAction func saveChangesButtonPressed(_ sender: UIButton) {
+        storeTextFieldData()
+    }
+    
+    func storeTextFieldData() {
         let check = areTextFieldInputsValid()
         let success = imageFileManagement.saveImage(image: profileImageView.image!, fileName: K.UserImageDirs.userProfileImage)
+        let locationInfo = locationManagement.getLocationInformation()
+        self.imageFileManagement.saveImageInFireStorage(fileName: K.UserImageDirs.userProfileImage, postCheck: false)
+        print(locationInfo)
         print(success)
         let profileManagementFirestore = ProfileManagementFirestore()
         if check {
             print("OK")
             if let firstName = firstNameTextField.text,
                 let lastName = lastNameTextField.text,
-                let address = addressTextField.text,
                 let email = emailTextField.text,
+                let address = addressTextField.text,
                 let phone = phoneTextField.text {
-                profileManagementFirestore
-                    .storeProfileDataToFirestore(firstName: firstName,
-                                                 lastName: lastName,
-                                                 email: email, address: address,
-                                                 phone: phone,
-                                                 profileImageURL: (imageFileManagement.getSavedImageDirectory(named: K.UserImageDirs.userProfileImage)) ?? ""
-                )
+                DispatchQueue.main.asyncAfter(deadline: .now() + 6.0) {
+                    profileManagementFirestore
+                        .storeProfileDataToFirestore(firstName: firstName,
+                                                     lastName: lastName,
+                                                     email: email,
+                                                     address: address,
+                                                     latitude: locationInfo["lat"] as! Double,
+                                                     longitude: locationInfo["lng"] as! Double,
+                                                     phone: phone,
+                                                     profileImageURL: self.imageFileManagement.profileImageURLString ?? ""
+                    )
+                }
+                
                 
             }
         } else {
@@ -80,7 +93,4 @@ extension EditProfileViewController {
             print("Not Ok")
         }
     }
-    
-    
-    
 }

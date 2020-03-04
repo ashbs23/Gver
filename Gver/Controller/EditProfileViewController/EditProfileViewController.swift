@@ -18,6 +18,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     @IBOutlet weak var profileImageEditButton: UIButton!
     @IBOutlet weak var saveChangesButton: UIButton!
     @IBOutlet weak var changeAddressButton: UIButton!
+    @IBOutlet weak var showMyLocationButton: UIButton!
     
     @IBOutlet weak var firstNameTextField: UITextField!
     @IBOutlet weak var lastNameTextField: UITextField!
@@ -27,7 +28,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     
     var imagePicker: ImagePicker!
     let imageFileManagement = ImageFileManagement()
-    
+    var locationManagement = LocationManagement.reference
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,19 +42,41 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         self.title = K.ViewTitle.editProfile
         
         updateUI()
+        addressTextFieldDoubleTapped()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         updateUI()
     }
-    @IBAction func addressTextFieldTapped(_ sender: UITapGestureRecognizer) {
+    @objc func doubleTapAction() {
         performSegue(withIdentifier: K.SegueNames.editProfileToMap, sender: self)
+    }
+    
+    func addressTextFieldDoubleTapped() {
+        let singleTapGesture = UITapGestureRecognizer(target: self, action: nil)
+        singleTapGesture.numberOfTapsRequired = 1
+        addressTextField.addGestureRecognizer(singleTapGesture)
+        let doubleTapGesture = UITapGestureRecognizer(target: self, action: #selector(doubleTapAction))
+        doubleTapGesture.numberOfTapsRequired = 2
+        addressTextField.addGestureRecognizer(doubleTapGesture)
+        singleTapGesture.require(toFail: doubleTapGesture)
+        
+        
+    }
+    
+    @IBAction func showMyLocationButtonPressed(_ sender: UIButton) {
+        locationManagement.locationManager.startUpdatingLocation()
+        let locationInformation = locationManagement.getLocationInformation()
+        print(locationInformation)
+        DispatchQueue.main.async {
+            self.addressTextField.text = locationInformation["address"] as? String
+        }
     }
 }
 
 extension EditProfileViewController: ImagePickerDelegate {
-
+    
     func didSelect(image: UIImage?) {
         if let img = image {
             self.profileImageView.image = img

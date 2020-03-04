@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import PINRemoteImage
 
 class SettingsViewController: UIViewController {
     
@@ -37,10 +38,9 @@ class SettingsViewController: UIViewController {
         profileImage.clipsToBounds = true
         settingsTableView.tableFooterView = UIView(frame: .zero)
         
-        if let img = imageFileManagement.getSavedImage(
-            named: K.UserImageDirs.userProfileImage) {
-              profileImage.image = img
-        }
+        profileImage.pin_updateWithProgress = true
+        profileImage.pin_setImage(from: URL.init(string: ProfileManagementFirestore.userInformation.profileImageURL!), placeholderImage: UIImage(named: "Icon"))
+        
     }
     
     @IBAction func editProfileButtonPressed(_ sender: UIButton) {
@@ -83,6 +83,7 @@ extension SettingsViewController: UITableViewDelegate {
             
             textFieldAlert.showBasicAlertNoActionWithClosure(on: self, title: "", message: K.AlertStrings.signingOut) {
                 if let viewController = self.storyboard?.instantiateViewController(withIdentifier: K.StoryboardID.signInViewController) as? SignInViewController {
+                    PINRemoteImageManager.shared().cache.removeAllObjects()
                     self.navigationController?.pushViewController(viewController, animated: true)
                     print("Signout was successful")
                 }

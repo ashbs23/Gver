@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Firebase
 
 protocol ImagePickerDelegate {
     func didSelect(image: UIImage?)
@@ -18,7 +17,7 @@ class ImagePicker: NSObject {
     let imageFileManagement = ImageFileManagement()
     var presentationController: UIViewController?
     var delegate: ImagePickerDelegate?
-    var fileName: String
+    var fileName: String!
     
     init(presentationController: UIViewController, delegate: ImagePickerDelegate, fileName: String) {
         self.pickerController = UIImagePickerController()

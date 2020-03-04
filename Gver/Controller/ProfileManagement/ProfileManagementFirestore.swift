@@ -11,11 +11,16 @@ import Firebase
 
 class ProfileManagementFirestore {
     
+    let locationManagement = LocationManagement.reference
+    let alert = TextFieldAlert()
+    
     static var userInformation = UserInformation(firstTime: true,
                                                  firstName: "",
                                                  lastName: "",
                                                  email: "",
                                                  address: "",
+                                                 latitude: 0.0,
+                                                 longitude: 0.0,
                                                  phone: "",
                                                  profileImageURL: "" )
     
@@ -32,6 +37,8 @@ class ProfileManagementFirestore {
                                       lastName: dataDescription[K.FStoreFields.UserInformationFields.lastNameField] as? String,
                                       email: dataDescription[K.FStoreFields.UserInformationFields.emailField] as! String,
                                       address: dataDescription[K.FStoreFields.UserInformationFields.addressField] as? String,
+                                      latitude: dataDescription[K.FStoreFields.UserInformationFields.latitudeField] as? Double,
+                                      longitude: dataDescription[K.FStoreFields.UserInformationFields.longitudeField] as? Double,
                                       phone: dataDescription[K.FStoreFields.UserInformationFields.phoneField] as? String,
                                       profileImageURL: dataDescription[K.FStoreFields.UserInformationFields.profileImageURL] as? String
                 )
@@ -40,27 +47,36 @@ class ProfileManagementFirestore {
             } else {
                 print("Document does not exist \(error?.localizedDescription ?? "")")
                 ProfileManagementFirestore.userInformation = UserInformation(firstTime: true,
-                firstName: "",
-                lastName: "",
-                email: "",
-                address: "",
-                phone: "",
-                profileImageURL: ""
+                                                                             firstName: "",
+                                                                             lastName: "",
+                                                                             email: "",
+                                                                             address: "",
+                                                                             latitude: 0.0,
+                                                                             longitude: 0.0,
+                                                                             phone: "",
+                                                                             profileImageURL: ""
                 )
             }
         }
     }
     
-    func storeProfileDataToFirestore(firstName: String, lastName: String, email: String, address: String, phone: String, profileImageURL: String) {
+    func storeProfileDataToFirestore(firstName: String, lastName: String, email: String,
+                                     address: String, latitude: Double, longitude: Double,
+                                     phone: String, profileImageURL: String) {
         let docRef = K.db.collection(K.FStoreFields.UserInformationFields.userInformationCollectionName)
             .document(Auth.auth().currentUser!.uid)
         print(docRef.documentID)
+        
         let userInformation = UserInformation(firstName: firstName,
                                               lastName: lastName,
                                               email: email,
                                               address: address,
+                                              latitude: latitude,
+                                              longitude: longitude,
                                               phone: phone,
                                               profileImageURL: profileImageURL)
+        print(userInformation)
+        print("From Store data")
         docRef.setData(userInformation.dictionary) { error in
             if let e = error {
                 print(e.localizedDescription)
@@ -70,4 +86,5 @@ class ProfileManagementFirestore {
             }
         }
     }
+    
 }

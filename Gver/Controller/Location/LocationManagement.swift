@@ -9,33 +9,82 @@
 import Foundation
 import UIKit
 import CoreLocation
-import MapKit
+import Firebase
 
 class LocationManagement: NSObject {
-    var locationManager: CLLocationManager
-    var delegate: CLLocationManagerDelegate?
-    var mapView: MKMapView?
     
-    init(on viewController: UIViewController, delegate: CLLocationManagerDelegate, mapView: MKMapView) {
-        self.locationManager = CLLocationManager()
+    var locationInformation: [String: Any]!
+    var locationManager: CLLocationManager!
+    var geoCoder: CLGeocoder!
+    static let reference = LocationManagement(locationInformation: [:])
+    
+    private init(locationInformation: [String: Any]) {
         super.init()
-        self.delegate = delegate
-        self.locationManager.delegate = self
-        self.mapView = mapView
+        self.locationInformation = locationInformation
+        geoCoder = CLGeocoder()
+        locationManager = CLLocationManager()
+        locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
         locationManager.requestLocation()
+    }
+    
+    func parseAddress(selectedItem: CLPlacemark) -> String {
+        let firstSpace = (selectedItem.subThoroughfare != nil && selectedItem.thoroughfare != nil)
+            ? " " : ""
         
+        let comma = (selectedItem.subThoroughfare != nil || selectedItem.thoroughfare != nil)
+            && (selectedItem.subAdministrativeArea != nil || selectedItem.administrativeArea != nil)
+            ? ", " : ""
+        
+        let secondSpace = (selectedItem.subAdministrativeArea != nil || selectedItem.administrativeArea != nil) ? " " : ""
+        let addressLine = String(format: "%@%@%@%@%@%@%@",
+                                 //street number
+                                 selectedItem.subThoroughfare ?? "",
+                                 firstSpace,
+                                 //street name
+                                 selectedItem.thoroughfare ?? "",
+                                 comma,
+                                 //city
+                                 selectedItem.locality ?? "",
+                                 secondSpace,
+                                 //state
+                                 selectedItem.administrativeArea ?? "")
+        return addressLine
+    }
+    
+    func storeLocation(address: String, coordinate: CLLocationCoordinate2D) {
+        locationInformation["address"] = address
+        locationInformation["lat"] = coordinate.latitude
+        locationInformation["lng"] = coordinate.longitude
+        locationInformation["coordinate"] = coordinate
+    }
+    
+    func getLocationInformation() -> [String: Any] {
+        return self.locationInformation
     }
 }
 
 extension LocationManagement: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.first {
-            let span = MKCoordinateSpan.init(latitudeDelta: 0.05, longitudeDelta: 0.05)
-            let region = MKCoordinateRegion(center: location.coordinate, span: span)
-            mapView!.setRegion(region, animated: true)
+            var address = ""
+            geoCoder.reverseGeocodeLocation(location) { (clplacemarks, error) in
+                if let e = error {
+                    print(e.localizedDescription)
+                    return
+                } else {
+                    if let placemark = clplacemarks?.first {
+                        address = self.parseAddress(selectedItem: placemark)
+                        self.storeLocation(address: address,
+                                           coordinate: location.coordinate)
+                    }
+                }
+            }
+            
         }
+        locationManager.stopUpdatingLocation()
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
@@ -50,6 +99,3 @@ extension LocationManagement: CLLocationManagerDelegate {
     }
 }
 
-extension LocationManagement: UINavigationControllerDelegate {
-    
-}
