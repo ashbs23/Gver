@@ -49,6 +49,10 @@ struct K {
         static let postTableViewCellNibName = "PostTableViewCell"
     }
     
+    struct ReusableCollectionCells {
+        static let imageCollectionViewCell = "ImageCollectionViewCell"
+    }
+    
     struct FStoreFields {
         struct UserInformationFields {
             static let userInformationCollectionName = "userInformation"

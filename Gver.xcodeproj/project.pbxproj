@@ -199,14 +199,22 @@
 				F85BBA5623F4061400A83066 /* EditProfileViewController */,
 				F848263023F16A0500C7ED46 /* SettingsViewController.swift */,
 				F8525B49240F845900FA133D /* PostViewController.swift */,
-				F86BBA1923F034C600202EAC /* HomeViewController.swift */,
-				F86649B4240E3002000F073C /* PostTableViewCell.swift */,
-				F86649B5240E3002000F073C /* PostTableViewCell.xib */,
+				F8525B4B240FDD8300FA133D /* HomeViewController */,
 				F8528CA623F6DEEF00E1D122 /* View */,
 				F84794E02403D71600853F6D /* CreatePostViewController */,
 				F853626423FEBB41009C8487 /* ImageCollectionViewCell.swift */,
 			);
 			path = Controller;
+			sourceTree = "<group>";
+		};
+		F8525B4B240FDD8300FA133D /* HomeViewController */ = {
+			isa = PBXGroup;
+			children = (
+				F86649B5240E3002000F073C /* PostTableViewCell.xib */,
+				F86BBA1923F034C600202EAC /* HomeViewController.swift */,
+				F86649B4240E3002000F073C /* PostTableViewCell.swift */,
+			);
+			path = HomeViewController;
 			sourceTree = "<group>";
 		};
 		F8528C9B23F6642C00E1D122 /* Validator */ = {

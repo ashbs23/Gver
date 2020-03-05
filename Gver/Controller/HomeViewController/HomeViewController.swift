@@ -55,6 +55,13 @@ extension HomeViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         performSegue(withIdentifier: K.SegueNames.homeToPost, sender: self)
     }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.destination is PostViewController
+        {
+            let vc = segue.destination as? PostViewController
+            vc?.post = posts[0]
+        }
+    }
 }
 
 extension HomeViewController {

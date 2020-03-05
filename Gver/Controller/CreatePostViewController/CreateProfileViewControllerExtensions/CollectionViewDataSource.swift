@@ -24,10 +24,6 @@ extension CreatePostViewController: UICollectionViewDataSource {
                 retimage = resultImage!
             }
             cell.imageView.image = retimage
-//            let singleTapGesture = UITapGestureRecognizer(target: self, action: #selector(singleTapEnlargeImage(_:)))
-//            singleTapGesture.numberOfTapsRequired = 1
-//            cell.imageView.addGestureRecognizer(singleTapGesture)
-//            cell.contentView.bringSubviewToFront(cell.removeImageButton)
             cell.removeImageButton.isHidden = false
             cell.removeImageButton.addTarget(self, action: #selector(removeImageButtonPressed), for: .touchUpInside)
             
