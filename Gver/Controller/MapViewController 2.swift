@@ -1,7 +1,7 @@
 ////
-////  MapViewController.swift
+////  MapViewController 2.swift
 ////  Gver
-////
+////  Might use some functionalities defined in here
 ////  Created by Md. Ashikul Hosen on 18/2/20.
 ////  Copyright © 2020 BS-23. All rights reserved.
 ////

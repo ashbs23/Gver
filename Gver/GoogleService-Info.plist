@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>273539315519-l39c7gvgjkbjtjb992nljhtllgjkhnnf.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.273539315519-l39c7gvgjkbjtjb992nljhtllgjkhnnf</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAv2sAuuy9CS5-DEN-L3oSKLNDQp-riB-M</string>
+	<key>GCM_SENDER_ID</key>
+	<string>273539315519</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.bs23.Gver</string>
+	<key>PROJECT_ID</key>
+	<string>gver-64709</string>
+	<key>STORAGE_BUCKET</key>
+	<string>gver-64709.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false/>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<true/>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true/>
+	<key>IS_GCM_ENABLED</key>
+	<true/>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true/>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:273539315519:ios:bdf110ca8bc24eef96c58a</string>
+	<key>DATABASE_URL</key>
+	<string>https://gver-64709.firebaseio.com</string>
+</dict>
+</plist>
